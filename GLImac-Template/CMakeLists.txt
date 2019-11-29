@@ -4,6 +4,7 @@ project(ImacGL)
 
 add_definitions(-std=c++11)
 
+set(truc truc)
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake)
 
 find_package(SDL REQUIRED)
