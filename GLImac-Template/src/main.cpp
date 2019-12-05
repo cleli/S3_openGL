@@ -15,12 +15,6 @@
 int main(int argc, char *argv[]) {
     App app;
 
-    GLuint vbo;
-    glGenBuffers(1,&vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(cubeData::positions), cubeData::positions, GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
     glClearColor(1, 0, 1, 1);
 
     // ------------------ Vertex Buffer

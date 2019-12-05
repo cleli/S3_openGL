@@ -6,7 +6,7 @@
 
 bool App::m_instanciated = false;
 
-App::App() : m_running(true) {
+App::App() {
     assert(!m_instanciated && "App already created !");
 	m_instanciated = true;
 
