@@ -1,0 +1,4 @@
+/home/6im2/mgaill08/Documents/ProjetOpenGL/S3_openGL/GLImac-Template/build/CMakeFiles/rebuild_cache.dir
+/home/6im2/mgaill08/Documents/ProjetOpenGL/S3_openGL/GLImac-Template/build/CMakeFiles/edit_cache.dir
+/home/6im2/mgaill08/Documents/ProjetOpenGL/S3_openGL/GLImac-Template/build/CMakeFiles/opengl-tutorials.dir
+/home/6im2/mgaill08/Documents/ProjetOpenGL/S3_openGL/GLImac-Template/build/CMakeFiles/GLAD.dir
