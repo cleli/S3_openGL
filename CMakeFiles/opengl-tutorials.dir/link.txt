@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/opengl-tutorials.dir/src/app.cpp.o CMakeFiles/opengl-tutorials.dir/src/cube.cpp.o CMakeFiles/opengl-tutorials.dir/src/gl-exception.cpp.o CMakeFiles/opengl-tutorials.dir/src/main.cpp.o CMakeFiles/opengl-tutorials.dir/src/shader.cpp.o  -o bin/opengl-tutorials -lOpenGL -lGLX -lGLU -lSDL2 libGLAD.a -ldl 

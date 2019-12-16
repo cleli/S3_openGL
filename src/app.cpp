@@ -8,7 +8,7 @@ bool App::m_instanciated = false;
 int WINDOW_WIDTH=650;
 int WINDOW_HEIGTH=650;
 
-App::App() {
+App::App() : m_running(true){
     assert(!m_instanciated && "App already created !");
 	m_instanciated = true;
 

@@ -11,7 +11,6 @@ namespace cubeData {
     //  | |v7---|-|v4
     //  |/      |/
     //  v2------v3
-
     const glm::vec3 positions[] = {
         // Front v0,v1,v2,v3
         glm::vec3(0.5, 0.5, 0.5), glm::vec3(-0.5, 0.5, 0.5), glm::vec3(-0.5, -0.5, 0.5), glm::vec3(0.5, -0.5, 0.5),
@@ -51,48 +50,48 @@ Cube::Cube()
 {
     // ------------------ Vertex Buffer
     unsigned int posVB;
-    
-    GLCall(glGenBuffers(1, &posVB));
-    GLCall(glBindBuffer(GL_ARRAY_BUFFER, posVB));
-    GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(cubeData::positions), cubeData::positions, GL_STATIC_DRAW));
-    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
-    
+    {
+        GLCall(glGenBuffers(1, &posVB));
+        GLCall(glBindBuffer(GL_ARRAY_BUFFER, posVB));
+        GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(cubeData::positions), cubeData::positions, GL_STATIC_DRAW));
+        GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+    }
     
     // ------------------ Vertex Array
-    
-    GLCall(glGenVertexArrays(1, &m_vao));
-    GLCall(glBindVertexArray(m_vao));
+    {
+        GLCall(glGenVertexArrays(1, &m_vao));
+        GLCall(glBindVertexArray(m_vao));
 
-    // Vertex input description
-    
-    GLCall(glEnableVertexAttribArray(0));
-    GLCall(glBindBuffer(GL_ARRAY_BUFFER, posVB));
-    GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL));
-    
-    
-    GLCall(glBindVertexArray(0));
-    
+        // Vertex input description
+        {
+            GLCall(glEnableVertexAttribArray(0));
+            GLCall(glBindBuffer(GL_ARRAY_BUFFER, posVB));
+            GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL));
+        }
+        
+        GLCall(glBindVertexArray(0));
+    }
 
     // ------------------ Index buffer
-    
-    GLCall(glGenBuffers(1, &m_ib));
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ib));
-    GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cubeData::indices), cubeData::indices, GL_STATIC_DRAW));
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
-    
+    {
+        GLCall(glGenBuffers(1, &m_ib));
+        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ib));
+        GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cubeData::indices), cubeData::indices, GL_STATIC_DRAW));
+        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+    }
 
     // ------------------ Default values for uniforms
     m_shader.bind();
-    
-    glm::mat4 modelMat = glm::mat4(1.0f);
-    m_shader.setUniformMat4f("uModel", modelMat);
-    
-    
-    glm::mat4 viewMat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -10.0f));
-    glm::mat4 projMat = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f);
-    glm::mat4 viewProjMat = projMat * viewMat;
-    m_shader.setUniformMat4f("uViewProj", viewProjMat);
-    
+    {
+        glm::mat4 modelMat = glm::mat4(1.0f);
+        m_shader.setUniformMat4f("uModel", modelMat);
+    }
+    {
+        glm::mat4 viewMat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -10.0f));
+        glm::mat4 projMat = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f);
+        glm::mat4 viewProjMat = projMat * viewMat;
+        m_shader.setUniformMat4f("uViewProj", viewProjMat);
+    }
     m_shader.unbind();
 }
 
