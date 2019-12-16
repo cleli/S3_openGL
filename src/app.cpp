@@ -5,6 +5,8 @@
 #include <debug_break/debug_break.h>
 
 bool App::m_instanciated = false;
+int WINDOW_WIDTH=650;
+int WINDOW_HEIGTH=650;
 
 App::App() {
     assert(!m_instanciated && "App already created !");
@@ -63,7 +65,7 @@ void App::initSDL() {
 	m_window = SDL_CreateWindow(
 		"OpenGL Tutorials !",
 		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-		650, 650,
+		WINDOW_WIDTH, WINDOW_HEIGTH,
 		SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI
     );
 	if (m_window == nullptr) {
