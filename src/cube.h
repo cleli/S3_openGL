@@ -14,10 +14,10 @@ public:
     
 public:
     glm::vec3 position;
+    bool isVisible;
 
 private:
     unsigned int m_vao;
     unsigned int m_ib;
     Shader m_shader;
-    bool m_isVisible;
 };

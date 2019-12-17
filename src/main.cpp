@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     unsigned int l=15, L=20, H=10; // taille de notre monde
 
     unsigned int curseur=floor((l/2)+(3*l*L)+(l*L/2)); //Emplacement initial du curseur au milieu du haut du sol
-    std::cout<< "Indice du curseur : "<<curseur<<std::endl;
+    //std::cout<< "Indice du curseur : "<<curseur<<std::endl;
 
     // activation de l'opacité ( pour la transparence des cubes )
     glEnable(GL_BLEND);
@@ -30,6 +30,7 @@ int main(int argc, char *argv[]) {
     Cube stockCube[l*L*H]; // tableau qui stocke tous les cubes du monde de taille(lxLxH)
     for(int i=0;i<l*L*H;i++){ // création de notre sol de cube (5*5*3)
         stockCube[i].position = glm::vec3 (i%l,  floor(float(i/(l*L))), floor(float((i/l) % L)));
+        if(i<l*L*3) stockCube[i].isVisible=true;
     }
 
     while (app.isRunning()) {
@@ -41,19 +42,27 @@ int main(int argc, char *argv[]) {
             case SDL_KEYDOWN:
             {   
                 float zoom = 1.0f;
-                // déplacement d'un cube
+                // déplacement du curseur
                 if (e.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-                    myCube.position.x--;
+                    curseur=curseur-1;
                 } else if (e.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-                    myCube.position.x++;
+                    curseur=curseur+1;
                 } else if (e.key.keysym.scancode == SDL_SCANCODE_UP) {
-                    myCube.position.y++;
+                    curseur=curseur+l*L;
                 } else if (e.key.keysym.scancode == SDL_SCANCODE_DOWN) {
-                    myCube.position.y--;
-                } else if (e.key.keysym.scancode == SDL_SCANCODE_PAGEUP) {
-                    myCube.position.z++;
-                } else if (e.key.keysym.scancode == SDL_SCANCODE_PAGEDOWN) {
-                    myCube.position.z--;
+                    curseur=curseur-l*L;
+                } else if (e.key.keysym.scancode == SDL_SCANCODE_O) {
+                    curseur=curseur+l;
+                } else if (e.key.keysym.scancode == SDL_SCANCODE_L) { 
+                    curseur=curseur-l;
+                }
+                //création d'un cube lorsqu'on appuie sur c
+                else if (e.key.keysym.scancode == SDL_SCANCODE_C){ 
+                   stockCube[curseur].isVisible=true;
+                }
+                //suppression d'un cube lorsqu'on appuie sur s
+                else if (e.key.keysym.scancode == SDL_SCANCODE_S){ 
+                   stockCube[curseur].isVisible=false;
                 }
                 // zoom et dezoom de la trackball camera
                 else if (e.key.keysym.scancode == SDL_SCANCODE_W){ //qwerty donc Z
@@ -64,10 +73,9 @@ int main(int argc, char *argv[]) {
                    // std::cout<<"D pressed"<<std::endl;
                     camera.moveFront(-zoom);
                 }
+                
             }
             break;
-
-            
 
             case SDL_MOUSEMOTION :
             {
@@ -93,15 +101,17 @@ int main(int argc, char *argv[]) {
 
         //affichage de notre sol de cubes
         float j=0;
-        for(int i=0;i<900;i++){
+
+        for(int i=0;i<l*L*H;i++){
             j+=0.001;
-            stockCube[i].draw(j, camera);
+            if(stockCube[i].isVisible==true){
+                stockCube[i].draw(j, camera);
+            }
         }
 
-        stockCube[curseur].draw(0.f, camera);
+       // stockCube[curseur].draw(0.f, camera); //affichage du curseur à son emplacement initial
 
         myCube.draw(1, camera);
-        
 
         app.endFrame();
     }
