@@ -18,8 +18,13 @@ int main(int argc, char *argv[]) {
     TrackballCamera camera; // création de la trackball caméra
     unsigned int l=15, L=20, H=10; // taille de notre monde
 
-    //glClearColor(1, 1, 1, 1);
-    
+    unsigned int curseur=floor((l/2)+(3*l*L)+(l*L/2)); //Emplacement initial du curseur au milieu du haut du sol
+    std::cout<< "Indice du curseur : "<<curseur<<std::endl;
+
+    // activation de l'opacité ( pour la transparence des cubes )
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+
     camera.setPosMatrix(l/2,H/2,L/2);
 
     Cube stockCube[l*L*H]; // tableau qui stocke tous les cubes du monde de taille(lxLxH)
@@ -88,10 +93,12 @@ int main(int argc, char *argv[]) {
 
         //affichage de notre sol de cubes
         float j=0;
-        for(int i=0;i<l*L*H;i++){
+        for(int i=0;i<900;i++){
             j+=0.001;
             stockCube[i].draw(j, camera);
         }
+
+        stockCube[curseur].draw(0.f, camera);
 
         myCube.draw(1, camera);
         
