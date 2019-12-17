@@ -13,7 +13,6 @@
 int main(int argc, char *argv[]) {
 
     App app;
-    Cube myCube;
    
     TrackballCamera camera; // création de la trackball caméra
     unsigned int l=15, L=20, H=10; // taille de notre monde
@@ -105,13 +104,11 @@ int main(int argc, char *argv[]) {
         for(int i=0;i<l*L*H;i++){
             j+=0.001;
             if(stockCube[i].isVisible==true){
-                stockCube[i].draw(j, camera);
+                stockCube[i].draw(glm::vec4(0.5f,j, 0.0f, 1.0f), camera);
             }
         }
 
-       // stockCube[curseur].draw(0.f, camera); //affichage du curseur à son emplacement initial
-
-        myCube.draw(1, camera);
+        stockCube[curseur].drawCurseur(camera);
 
         app.endFrame();
     }

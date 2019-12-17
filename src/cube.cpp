@@ -13,12 +13,22 @@ namespace cubeData {
     //  | |v7---|-|v4
     //  |/      |/
     //  v2------v3
+ 
+    glm::vec3 v0 = glm::vec3(0.5, 0.5, 0.5);
+    glm::vec3 v1 = glm::vec3(-0.5, 0.5, 0.5);
+    glm::vec3 v2 = glm::vec3(-0.5, -0.5, 0.5);
+    glm::vec3 v3 = glm::vec3(0.5, -0.5, 0.5);
+    glm::vec3 v4 = glm::vec3(0.5, -0.5, -0.5);
+    glm::vec3 v5 = glm::vec3(0.5, 0.5, -0.5); 
+    glm::vec3 v6 = glm::vec3(-0.5, 0.5, -0.5);
+    glm::vec3 v7 = glm::vec3(-0.5, -0.5, -0.5);
+
     const glm::vec3 positions[] = {
         // Front v0,v1,v2,v3
         glm::vec3(0.5, 0.5, 0.5), glm::vec3(-0.5, 0.5, 0.5), glm::vec3(-0.5, -0.5, 0.5), glm::vec3(0.5, -0.5, 0.5),
         // Right v0,v3,v4,v5
         glm::vec3(0.5, 0.5, 0.5), glm::vec3(0.5, -0.5, 0.5), glm::vec3(0.5, -0.5, -0.5), glm::vec3(0.5, 0.5, -0.5),
-        // Top v0,v5,v6,v0.5	
+        // Top v0,v5,v6,v5	
         glm::vec3(0.5, 0.5, 0.5), glm::vec3(0.5, 0.5, -0.5), glm::vec3(-0.5, 0.5, -0.5), glm::vec3(-0.5, 0.5, 0.5), 
         // Left v1,v6,v7,v2	
         glm::vec3(-0.5, 0.5, 0.5), glm::vec3(-0.5, 0.5, -0.5), glm::vec3(-0.5, -0.5, -0.5), glm::vec3(-0.5, -0.5, 0.5),  
@@ -28,6 +38,10 @@ namespace cubeData {
         glm::vec3(0.5, -0.5, -0.5), glm::vec3(-0.5, -0.5, -0.5), glm::vec3(-0.5, 0.5, -0.5), glm::vec3(0.5, 0.5, -0.5)
     };
 
+    /*const glm::vec3 positionsCurseur[] = {
+        v0,v1, v1,v2, v2,v3, v3,v0, v0,v5, v3,v4, v4,v5, v5,v6, v6,v1, v6,v7, v7,v4, v7,v2
+    };*/
+    
     const glm::vec3 normals[] = {
         glm::vec3(0, 0, 1), glm::vec3(0, 0, 1), glm::vec3(0, 0, 1), glm::vec3(0, 0, 1),
         glm::vec3(1, 0, 0), glm::vec3(1, 0, 0), glm::vec3(1, 0, 0), glm::vec3(1, 0, 0),
@@ -58,6 +72,7 @@ Cube::Cube()
         GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(cubeData::positions), cubeData::positions, GL_STATIC_DRAW));
         GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
     }
+
     
     // ------------------ Vertex Array
     {
@@ -103,7 +118,8 @@ Cube::~Cube()
 }
 
 
-void Cube::draw(float j, const TrackballCamera &cam) {
+void Cube::draw(glm::vec4 color, const TrackballCamera &cam) {
+
     // Bind
     GLCall(glBindVertexArray(m_vao));
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ib));
@@ -118,8 +134,30 @@ void Cube::draw(float j, const TrackballCamera &cam) {
     m_shader.setUniformMat4f("uViewProj", cam.getProjMatrix() * cam.getViewMatrix());
 
     //changer de couleur à chaque cube
-    m_shader.setUniform1f("uColor", j);
+    m_shader.setUniform4f("uColor", color);
 
     // Draw call
     GLCall(glDrawElements(GL_TRIANGLES, sizeof(cubeData::indices), GL_UNSIGNED_SHORT, (void*) 0));
+}
+
+void Cube::drawCurseur(const TrackballCamera &cam) {
+
+    // Bind
+    GLCall(glBindVertexArray(m_vao));
+    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ib));
+    m_shader.bind();
+
+    // Update model mat uniform
+    glm::mat4 modelMat = glm::translate(glm::mat4(1.0f), position);
+    
+    m_shader.setUniformMat4f("uModel", modelMat);
+
+    //pour la camera
+    m_shader.setUniformMat4f("uViewProj", cam.getProjMatrix() * cam.getViewMatrix());
+    
+    //changer de couleur à chaque cube
+    m_shader.setUniform4f("uColor", glm::vec4(1.0f,0.0f,0.0f,1.0f));
+
+    // Draw call
+    GLCall(glDrawElements(GL_LINES, sizeof(cubeData::indices), GL_UNSIGNED_SHORT, (void*) 0));
 }

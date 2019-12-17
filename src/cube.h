@@ -10,7 +10,8 @@ public:
     Cube();
     ~Cube();
 
-    void draw(float j, const TrackballCamera &cam);
+    void draw(glm::vec4 color, const TrackballCamera &cam);
+    void drawCurseur(const TrackballCamera &cam);
     
 public:
     glm::vec3 position;
