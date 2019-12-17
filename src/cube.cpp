@@ -1,7 +1,9 @@
 #include "cube.h"
+#include <iostream>
 
 #include <glm/gtc/matrix_transform.hpp>
 #include "gl-exception.h"
+#include "TrackballCamera.hpp"
 
 namespace cubeData {
     //    v6----- v5
@@ -46,7 +48,7 @@ namespace cubeData {
 }
 
 Cube::Cube() 
-    : m_vao(0), m_ib(0), position(0), m_shader("res/shaders/basic.vert", "res/shaders/basic.frag")
+    : m_vao(0), m_ib(0), position(0), m_shader("res/shaders/basic.vert", "res/shaders/basic.frag") 
 {
     // ------------------ Vertex Buffer
     unsigned int posVB;
@@ -91,6 +93,7 @@ Cube::Cube()
         glm::mat4 projMat = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f);
         glm::mat4 viewProjMat = projMat * viewMat;
         m_shader.setUniformMat4f("uViewProj", viewProjMat);
+
     }
     m_shader.unbind();
 }
@@ -99,7 +102,8 @@ Cube::~Cube()
 {
 }
 
-void Cube::draw() {
+
+void Cube::draw(float j, const TrackballCamera &cam) {
     // Bind
     GLCall(glBindVertexArray(m_vao));
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ib));
@@ -107,7 +111,14 @@ void Cube::draw() {
 
     // Update model mat uniform
     glm::mat4 modelMat = glm::translate(glm::mat4(1.0f), position);
+    
     m_shader.setUniformMat4f("uModel", modelMat);
+    
+    //pour la camera
+    m_shader.setUniformMat4f("uViewProj", cam.getProjMatrix() * cam.getViewMatrix());
+
+    //changer de couleur à chaque cube
+    m_shader.setUniform1f("uColor", j);
 
     // Draw call
     GLCall(glDrawElements(GL_TRIANGLES, sizeof(cubeData::indices), GL_UNSIGNED_SHORT, (void*) 0));

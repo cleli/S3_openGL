@@ -3,13 +3,14 @@
 #include <glm/glm.hpp>
 
 #include "shader.h"
+#include "TrackballCamera.hpp"
 
 class Cube {
 public:
     Cube();
     ~Cube();
 
-    void draw();
+    void draw(float j, const TrackballCamera &cam);
     
 public:
     glm::vec3 position;
