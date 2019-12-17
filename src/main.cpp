@@ -16,14 +16,15 @@ int main(int argc, char *argv[]) {
     Cube myCube;
    
     TrackballCamera camera; // création de la trackball caméra
-    unsigned int l=5, L=5, H=10; // taille de notre monde
+    unsigned int l=15, L=20, H=10; // taille de notre monde
 
     //glClearColor(1, 1, 1, 1);
     
+    camera.setPosMatrix(l/2,H/2,L/2);
 
     Cube stockCube[l*L*H]; // tableau qui stocke tous les cubes du monde de taille(lxLxH)
-    for(int i=0;i<75;i++){ // création de notre sol de cube (5*5*3)
-        stockCube[i].position = glm::vec3 (i%l,  floor(float(i/(l*L))), floor(float((i/l) % L)) );
+    for(int i=0;i<l*L*H;i++){ // création de notre sol de cube (5*5*3)
+        stockCube[i].position = glm::vec3 (i%l,  floor(float(i/(l*L))), floor(float((i/l) % L)));
     }
 
     while (app.isRunning()) {
@@ -50,11 +51,11 @@ int main(int argc, char *argv[]) {
                     myCube.position.z--;
                 }
                 // zoom et dezoom de la trackball camera
-                else if (e.key.keysym.scancode == SDL_SCANCODE_Z){
+                else if (e.key.keysym.scancode == SDL_SCANCODE_W){ //qwerty donc Z
                     //std::cout<<"Z pressed"<<std::endl;
                     camera.moveFront(zoom);
                 }
-                else if (e.key.keysym.scancode == SDL_SCANCODE_D){
+                else if (e.key.keysym.scancode == SDL_SCANCODE_D){ 
                    // std::cout<<"D pressed"<<std::endl;
                     camera.moveFront(-zoom);
                 }
@@ -87,8 +88,8 @@ int main(int argc, char *argv[]) {
 
         //affichage de notre sol de cubes
         float j=0;
-        for(int i=0;i<75;i++){
-            j+=0.01;
+        for(int i=0;i<l*L*H;i++){
+            j+=0.001;
             stockCube[i].draw(j, camera);
         }
 
