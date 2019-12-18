@@ -47,19 +47,19 @@ int main(int argc, char *argv[]) {
 
             case SDL_KEYDOWN:
             {   
-                // déplacement du curseur
+                // déplacement du curseur seulement dans notre monde
                 if (e.key.keysym.scancode == SDL_SCANCODE_LEFT) {
-                    curseur=curseur-1;
+                    if(curseur%l>0) curseur=curseur-1;
                 } else if (e.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
-                    curseur=curseur+1;
+                    if(curseur%l<l-1) curseur=curseur+1;
                 } else if (e.key.keysym.scancode == SDL_SCANCODE_UP) {
-                    curseur=curseur+l*L;
+                    if(floor(float(curseur/(l*L)))<H-1) curseur=curseur+l*L;
                 } else if (e.key.keysym.scancode == SDL_SCANCODE_DOWN) {
-                    curseur=curseur-l*L;
+                    if(floor(float(curseur/(l*L)))>0) curseur=curseur-l*L;
                 } else if (e.key.keysym.scancode == SDL_SCANCODE_O) {
-                    curseur=curseur+l;
+                    if(floor(float((curseur/l) % L))<L-1) curseur=curseur+l;
                 } else if (e.key.keysym.scancode == SDL_SCANCODE_L) { 
-                    curseur=curseur-l;
+                    if(floor(float((curseur/l) % L))>0) curseur=curseur-l;
                 } 
 
                 // Raccourcis clavier pour créer et supprimer un cube
@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
                     stockCube[curseur].isVisible=false;
                 }
 
-                // Raccourcis clavier pour changer la couleur
+                /*// Raccourcis clavier pour changer la couleur
                 else if (e.key.keysym.scancode == SDL_SCANCODE_R){  //rouge
                     current_color = glm::vec4(1.0f,0.0f, 0.0f, 0.8f);
                     if(stockCube[curseur].isVisible==true) stockCube[curseur].color= current_color;
@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
                 else if (e.key.keysym.scancode == SDL_SCANCODE_B){ //bleu
                     current_color = glm::vec4(0.0f,0.0f, 1.0f, 0.8f);
                     if(stockCube[curseur].isVisible==true) stockCube[curseur].color= current_color;
-                }
+                }*/
                 
             }
             break;
@@ -133,7 +133,7 @@ int main(int argc, char *argv[]) {
 
         app.beginFrame();
 
-        afficheMenu(curseur, current_color, stockCube, l, L);        
+        afficheMenu(curseur, &current_color, stockCube, l, L);        
        // ImGui::ShowDemoWindow();
 
          //affichage de notre monde initialisé avec un sol
