@@ -4,6 +4,10 @@
 #include <spdlog/spdlog.h>
 #include <debug_break/debug_break.h>
 
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_sdl.h>
+#include <imgui/imgui_impl_opengl3.h>
+
 bool App::m_instanciated = false;
 int WINDOW_WIDTH=650;
 int WINDOW_HEIGTH=650;
@@ -15,6 +19,7 @@ App::App() : m_running(true){
     spdlog::set_pattern("[%l] %^ %v %$");
 
 	initSDL();
+	initImGui();
 
 	glEnable(GL_DEPTH_TEST);
 }
@@ -27,9 +32,16 @@ App::~App() {
 
 void App::beginFrame() const {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplSDL2_NewFrame(m_window);
+	ImGui::NewFrame();
 }
 
 void App::endFrame() const {
+	// Render ImGui
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	//
 	SDL_GL_SwapWindow(m_window);
 }
 
@@ -88,3 +100,18 @@ void App::initSDL() {
 	}
 }
 
+//---------------initialisation IMGUI
+
+void App::initImGui(){
+
+#if __APPLE__
+		const char* glslVersion = "#version 150";
+#else
+		const char* glslVersion = "#version 130";
+#endif
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGui_ImplSDL2_InitForOpenGL(m_window, m_glContext);
+		ImGui_ImplOpenGL3_Init(glslVersion);
+		ImGui::StyleColorsClassic();
+}

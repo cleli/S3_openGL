@@ -10,11 +10,12 @@ public:
     Cube();
     ~Cube();
 
-    void draw(glm::vec4 color, const TrackballCamera &cam);
+    void draw(const TrackballCamera &cam);
     void drawCurseur(const TrackballCamera &cam);
     
 public:
     glm::vec3 position;
+    glm::vec4 color;
     bool isVisible;
 
 private:

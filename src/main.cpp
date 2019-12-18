@@ -6,6 +6,10 @@
 #include <string>
 #include <iostream>
 
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_sdl.h>
+#include <imgui/imgui_impl_opengl3.h>
+
 #include "TrackballCamera.hpp"
 #include "app.h"
 #include "cube.h"
@@ -32,15 +36,19 @@ int main(int argc, char *argv[]) {
         if(i<l*L*3) stockCube[i].isVisible=true;
     }
 
+    bool mouse_pressed=false; //appui de la molette pour le déplacement de la trackball
+
     while (app.isRunning()) {
+
         SDL_Event e;
+        float zoom = 1.0f;
         while (SDL_PollEvent(&e)) {
+            ImGui_ImplSDL2_ProcessEvent(&e);
             switch (e.type) {
             case SDL_QUIT: app.exit();
 
             case SDL_KEYDOWN:
             {   
-                float zoom = 1.0f;
                 // déplacement du curseur
                 if (e.key.keysym.scancode == SDL_SCANCODE_LEFT) {
                     curseur=curseur-1;
@@ -63,29 +71,54 @@ int main(int argc, char *argv[]) {
                 else if (e.key.keysym.scancode == SDL_SCANCODE_S){ 
                    stockCube[curseur].isVisible=false;
                 }
-                // zoom et dezoom de la trackball camera
-                else if (e.key.keysym.scancode == SDL_SCANCODE_W){ //qwerty donc Z
-                    //std::cout<<"Z pressed"<<std::endl;
-                    camera.moveFront(zoom);
+                //changer la couleur
+                else if (e.key.keysym.scancode == SDL_SCANCODE_R){  //rouge
+                   if(stockCube[curseur].isVisible==true) stockCube[curseur].color= glm::vec4(1.0f,0.0f, 0.0f, 1.0f);
                 }
-                else if (e.key.keysym.scancode == SDL_SCANCODE_D){ 
-                   // std::cout<<"D pressed"<<std::endl;
-                    camera.moveFront(-zoom);
+                else if (e.key.keysym.scancode == SDL_SCANCODE_V){ //vert
+                   if(stockCube[curseur].isVisible==true) stockCube[curseur].color= glm::vec4(0.0f,1.0f, 0.0f, 1.0f);
+                }
+                else if (e.key.keysym.scancode == SDL_SCANCODE_B){ //bleu
+                   if(stockCube[curseur].isVisible==true) stockCube[curseur].color= glm::vec4(0.0f,0.0f, 1.0f, 1.0f);
                 }
                 
             }
             break;
 
-            case SDL_MOUSEMOTION :
+            case SDL_MOUSEWHEEL: 
             {
-                // rotation de la trackball camera
-                float speed = 1.0f;
-                //std::cout<<"mouse move";
-                if( e.motion.xrel !=0){
-                    camera.rotateUp(float(e.motion.xrel)*speed);
-                }
-                if( e.motion.yrel !=0){
-                    camera.rotateLeft(float(e.motion.yrel)*speed);
+                if (e.wheel.y < 0)
+                    camera.moveFront(-zoom); //dézoom avec la molette
+                else
+                    camera.moveFront(zoom); //zoom
+            }
+            break;
+            
+            //clique du bouton de la molette
+            case SDL_MOUSEBUTTONDOWN :
+            {
+                if (e.button.button == SDL_BUTTON_MIDDLE) mouse_pressed = true;
+            }
+            break;
+
+            case SDL_MOUSEBUTTONUP :
+            {
+                if (e.button.button == SDL_BUTTON_MIDDLE) mouse_pressed = false;
+            }
+            break;
+
+            case SDL_MOUSEMOTION :
+            {   
+                //on ne peut bouger la trackball qu'en cliquant sur la molette de la souris
+                if(mouse_pressed==true){
+                    // rotation de la trackball camera
+                    float speed = 1.0f;
+                    if( e.motion.xrel !=0){
+                        camera.rotateUp(float(e.motion.xrel)*speed);
+                    }
+                    if( e.motion.yrel !=0){
+                        camera.rotateLeft(float(e.motion.yrel)*speed);
+                    }
                 }
             }
             break;
@@ -98,20 +131,27 @@ int main(int argc, char *argv[]) {
 
         app.beginFrame();
 
-        //affichage de notre sol de cubes
-        float j=0;
+       
 
+        ImGui::Begin("Menu");
+        ImGui::End();
+        ImGui::ShowDemoWindow();
+
+         //affichage de notre monde initialisé avec un sol
         for(int i=0;i<l*L*H;i++){
-            j+=0.001;
             if(stockCube[i].isVisible==true){
-                stockCube[i].draw(glm::vec4(0.5f,j, 0.0f, 1.0f), camera);
+                stockCube[i].draw(camera);
             }
         }
 
+        glDisable(GL_DEPTH_TEST);
         stockCube[curseur].drawCurseur(camera);
+        glEnable(GL_DEPTH_TEST);
 
         app.endFrame();
     }
-    
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplSDL2_Shutdown();
+    ImGui::DestroyContext();
     return 0;
 }

@@ -62,7 +62,7 @@ namespace cubeData {
 }
 
 Cube::Cube() 
-    : m_vao(0), m_ib(0), position(0), m_shader("res/shaders/basic.vert", "res/shaders/basic.frag"), isVisible(0)
+    : m_vao(0), m_ib(0), position(0), m_shader("res/shaders/basic.vert", "res/shaders/basic.frag"), isVisible(0), color(0.53f,0.3f,0.65f,0.5f)
 {
     // ------------------ Vertex Buffer
     unsigned int posVB;
@@ -118,7 +118,7 @@ Cube::~Cube()
 }
 
 
-void Cube::draw(glm::vec4 color, const TrackballCamera &cam) {
+void Cube::draw(const TrackballCamera &cam) {
 
     // Bind
     GLCall(glBindVertexArray(m_vao));
@@ -159,5 +159,5 @@ void Cube::drawCurseur(const TrackballCamera &cam) {
     m_shader.setUniform4f("uColor", glm::vec4(1.0f,0.0f,0.0f,1.0f));
 
     // Draw call
-    GLCall(glDrawElements(GL_LINES, sizeof(cubeData::indices), GL_UNSIGNED_SHORT, (void*) 0));
+    GLCall(glDrawElements(GL_LINE_STRIP, sizeof(cubeData::indices), GL_UNSIGNED_SHORT, (void*) 0));
 }
