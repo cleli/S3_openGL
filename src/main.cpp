@@ -148,7 +148,8 @@ int main(int argc, char *argv[]) {
                 stockCube[i].draw(camera);
             }
         }
-
+        
+        // pour que le curseur reste toujours visible
         glDisable(GL_DEPTH_TEST);
         stockCube[curseur].drawCurseur(camera);
         glEnable(GL_DEPTH_TEST);
