@@ -37,6 +37,7 @@ int main(int argc, char *argv[]) {
     }
     
     bool mouse_pressed=false; //appui de la molette pour le déplacement de la trackball
+    glm::vec4 current_color = glm::vec4(0.93f,0.5f, 0.93f, 0.8f);
 
     while (app.isRunning()) {
 
@@ -74,13 +75,16 @@ int main(int argc, char *argv[]) {
 
                 // Raccourcis clavier pour changer la couleur
                 else if (e.key.keysym.scancode == SDL_SCANCODE_R){  //rouge
-                   if(stockCube[curseur].isVisible==true) stockCube[curseur].color= glm::vec4(1.0f,0.0f, 0.0f, 0.5f);
+                    current_color = glm::vec4(1.0f,0.0f, 0.0f, 0.8f);
+                    if(stockCube[curseur].isVisible==true) stockCube[curseur].color= current_color;
                 }
                 else if (e.key.keysym.scancode == SDL_SCANCODE_V){ //vert
-                   if(stockCube[curseur].isVisible==true) stockCube[curseur].color= glm::vec4(0.0f,1.0f, 0.0f, 0.5f);
+                    current_color = glm::vec4(0.0f,1.0f, 0.0f, 0.8f);
+                    if(stockCube[curseur].isVisible==true) stockCube[curseur].color= current_color;
                 }
                 else if (e.key.keysym.scancode == SDL_SCANCODE_B){ //bleu
-                   if(stockCube[curseur].isVisible==true) stockCube[curseur].color= glm::vec4(0.0f,0.0f, 1.0f, 0.5f);
+                    current_color = glm::vec4(0.0f,0.0f, 1.0f, 0.8f);
+                    if(stockCube[curseur].isVisible==true) stockCube[curseur].color= current_color;
                 }
                 
             }
@@ -132,31 +136,74 @@ int main(int argc, char *argv[]) {
 
         app.beginFrame();
 
+        static bool rouge=false;
+        static bool orange=false;
+        static bool jaune=false;
+        static bool vert=false;
+        static bool bleu=false;
+        static bool indigo=false;
+        static bool violet=false;
+
         //création du menu
         ImGui::Begin("Menu");
-        ImGui::Text("Couleur : ");
-        ImGui::Spacing();
-       
-        //couleurs
-        if(ImGui::Button("Rouge")){ 
-            if(stockCube[curseur].isVisible==true) stockCube[curseur].color= glm::vec4(1.0f,0.0f, 0.0f, 0.5f);
+
+        //Menu couleurs
+        if (ImGui::BeginMenu("Couleur"))
+        {
+            ImGui::MenuItem("Rouge", NULL, &rouge);
+            ImGui::MenuItem("Orange", NULL, &orange);
+            ImGui::MenuItem("Jaune", NULL, &jaune);
+            ImGui::MenuItem("Vert", NULL, &vert);
+            ImGui::MenuItem("Bleu", NULL, &bleu);
+            ImGui::MenuItem("Indigo", NULL, &indigo);
+            ImGui::MenuItem("Violet", NULL, &violet);
+            ImGui::EndMenu();
         }
-        ImGui::SameLine();
-        if(ImGui::Button("Vert")){ 
-            if(stockCube[curseur].isVisible==true) stockCube[curseur].color= glm::vec4(0.0f,1.0f, 0.0f, 0.5f);
+        
+        if (rouge==true){
+            current_color = glm::vec4(1.0f, 0.0f, 0.0f, 0.8f);
+            if(stockCube[curseur].isVisible==true) stockCube[curseur].color= current_color;
+            rouge=false;
         }
-        ImGui::SameLine();
-        if(ImGui::Button("Bleu")){
-            if(stockCube[curseur].isVisible==true) stockCube[curseur].color= glm::vec4(0.0f,0.0f, 1.0f, 0.5f);
+        if (orange==true){
+            current_color = glm::vec4(1.0f, 0.6f, 0.0f, 0.8f);
+            if(stockCube[curseur].isVisible==true) stockCube[curseur].color= current_color;
+            orange=false;
         }
+        if (jaune==true){
+            current_color = glm::vec4(1.0f,0.89f, 0.2f, 0.8f);
+            if(stockCube[curseur].isVisible==true) stockCube[curseur].color= current_color;
+            jaune=false;
+        }
+        if (vert==true){
+            current_color = glm::vec4(0.0f,1.0f, 0.0f, 0.8f);
+            if(stockCube[curseur].isVisible==true) stockCube[curseur].color= current_color;
+            vert=false;
+        }
+        if (indigo==true){
+            current_color = glm::vec4(0.47f,0.1f, 0.97f, 0.8f);
+            if(stockCube[curseur].isVisible==true) stockCube[curseur].color= current_color;
+            indigo=false;
+        }
+        if (bleu==true){
+            current_color = glm::vec4(0.0f,0.0f, 1.0f, 0.8f);
+            if(stockCube[curseur].isVisible==true) stockCube[curseur].color= current_color;
+            bleu=false;
+        }
+        if (violet==true){
+            current_color = glm::vec4(0.93f,0.5f, 0.93f, 0.8f);
+            if(stockCube[curseur].isVisible==true) stockCube[curseur].color= current_color;
+            violet=false;
+        }
+
+        //Sculpture du monde : créer, supprimer, creuser et extruder
 
         ImGui::Text("Sculpture : ");
         ImGui::Spacing();
-
-        //Sculpture du monde : créer, supprimer, creuser et extruder
+        
         if(ImGui::Button("Créer")){ 
             stockCube[curseur].isVisible=true;
-            stockCube[curseur].color=glm::vec4(0.53f,0.3f,0.65f,0.5f);
+            stockCube[curseur].color=current_color;
         }
         ImGui::SameLine();
         if(ImGui::Button("Supprimer")){ 

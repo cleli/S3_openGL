@@ -62,7 +62,7 @@ namespace cubeData {
 }
 
 Cube::Cube() 
-    : m_vao(0), m_ib(0), position(0), m_shader("res/shaders/basic.vert", "res/shaders/basic.frag"), isVisible(0), color(0.53f,0.3f,0.65f,0.5f)
+    : m_vao(0), m_ib(0), position(0), m_shader("res/shaders/basic.vert", "res/shaders/basic.frag"), isVisible(0), color(0.93f,0.5f, 0.93f, 0.5f)
 {
     // ------------------ Vertex Buffer
     unsigned int posVB;

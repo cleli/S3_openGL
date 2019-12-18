@@ -31,6 +31,10 @@ App::~App() {
 }
 
 void App::beginFrame() const {
+	// activation de l'opacité ( pour la transparence des cubes )
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(m_window);
