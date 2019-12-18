@@ -22,7 +22,7 @@ static bool bleu=false;
 static bool indigo=false;
 static bool violet=false;
 
-void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[],unsigned int l,unsigned int L) {
+void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[],unsigned int l,unsigned int L, unsigned int H) {
     //création du menu
     ImGui::Begin("Menu");
 
@@ -104,8 +104,10 @@ void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[
         while(stockCube[current_cube].isVisible==true) {
             current_cube=current_cube+l*L;
         }
-        stockCube[current_cube].isVisible=true;
-        stockCube[current_cube].color= *current_color;
+        if(floor(float(current_cube/(l*L)))<H-1){
+            stockCube[current_cube].isVisible=true;
+            stockCube[current_cube].color= *current_color;
+        }
     }
     ImGui::SameLine();
     if(ImGui::Button("Creuser")){ 
@@ -113,8 +115,21 @@ void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[
         while(stockCube[current_cube].isVisible==true) {
             current_cube=current_cube+l*L;
         }
-        stockCube[current_cube-l*L].isVisible=false;
-        stockCube[current_cube-l*L].color= *current_color;
+        if(floor(float(current_cube/(l*L)))>0){
+            stockCube[current_cube-l*L].isVisible=false;
+            stockCube[current_cube-l*L].color= *current_color;
+        }
+    }
+
+    ImGui::Spacing();
+    ImGui::Spacing();
+    ImGui::Spacing();
+
+    //Effacer le monde
+    if(ImGui::Button("Effacer tout")){ 
+        for(int i=0;i<l*L*H;i++){ 
+            stockCube[i].isVisible=false;
+        }
     }
 
     ImGui::End();

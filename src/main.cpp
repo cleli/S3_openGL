@@ -50,15 +50,20 @@ int main(int argc, char *argv[]) {
                 // déplacement du curseur seulement dans notre monde
                 if (e.key.keysym.scancode == SDL_SCANCODE_LEFT) {
                     if(curseur%l>0) curseur=curseur-1;
-                } else if (e.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
+                } 
+                else if (e.key.keysym.scancode == SDL_SCANCODE_RIGHT) {
                     if(curseur%l<l-1) curseur=curseur+1;
-                } else if (e.key.keysym.scancode == SDL_SCANCODE_UP) {
+                }
+                else if (e.key.keysym.scancode == SDL_SCANCODE_UP) {
                     if(floor(float(curseur/(l*L)))<H-1) curseur=curseur+l*L;
-                } else if (e.key.keysym.scancode == SDL_SCANCODE_DOWN) {
+                } 
+                else if (e.key.keysym.scancode == SDL_SCANCODE_DOWN) {
                     if(floor(float(curseur/(l*L)))>0) curseur=curseur-l*L;
-                } else if (e.key.keysym.scancode == SDL_SCANCODE_O) {
+                } 
+                else if (e.key.keysym.scancode == SDL_SCANCODE_O) {
                     if(floor(float((curseur/l) % L))<L-1) curseur=curseur+l;
-                } else if (e.key.keysym.scancode == SDL_SCANCODE_L) { 
+                } 
+                else if (e.key.keysym.scancode == SDL_SCANCODE_L) { 
                     if(floor(float((curseur/l) % L))>0) curseur=curseur-l;
                 } 
 
@@ -66,7 +71,8 @@ int main(int argc, char *argv[]) {
                 else if (e.key.keysym.scancode == SDL_SCANCODE_C) { 
                     stockCube[curseur].isVisible=true;
                     stockCube[curseur].color=glm::vec4(0.53f,0.3f,0.65f,0.5f);
-                } else if (e.key.keysym.scancode == SDL_SCANCODE_S) { 
+                } 
+                else if (e.key.keysym.scancode == SDL_SCANCODE_S) { 
                     stockCube[curseur].isVisible=false;
                 }
 
@@ -133,7 +139,7 @@ int main(int argc, char *argv[]) {
 
         app.beginFrame();
 
-        afficheMenu(curseur, &current_color, stockCube, l, L);        
+        afficheMenu(curseur, &current_color, stockCube, l, L, H);        
        // ImGui::ShowDemoWindow();
 
          //affichage de notre monde initialisé avec un sol
