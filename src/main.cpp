@@ -22,11 +22,7 @@ int main(int argc, char *argv[]) {
     unsigned int l=15, L=20, H=10; // taille de notre monde
 
     unsigned int curseur=floor((l/2)+(3*l*L)+(l*L/2)); //Emplacement initial du curseur au milieu du haut du sol
-    //std::cout<< "Indice du curseur : "<<curseur<<std::endl;
 
-    // activation de l'opacité ( pour la transparence des cubes )
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
     camera.setPosMatrix(l/2,H/2,L/2);
 
@@ -210,11 +206,24 @@ int main(int argc, char *argv[]) {
             stockCube[curseur].isVisible=false;
         }
         ImGui::SameLine();
-        if(ImGui::Button("Creuser")){ 
+        if(ImGui::Button("Extruder")){
+            unsigned int current_cube = curseur;
+            while(stockCube[current_cube].isVisible==true) {
+                current_cube=current_cube+l*L;
+            }
+            stockCube[current_cube].isVisible=true;
+            stockCube[current_cube].color=current_color;
         }
         ImGui::SameLine();
-        if(ImGui::Button("Extruder")){ 
+        if(ImGui::Button("Creuser")){ 
+            unsigned int current_cube = curseur;
+            while(stockCube[current_cube].isVisible==true) {
+                current_cube=current_cube+l*L;
+            }
+            stockCube[current_cube-l*L].isVisible=false;
+            stockCube[current_cube-l*L].color=current_color;
         }
+        
 
         ImGui::End();
         ImGui::ShowDemoWindow();
