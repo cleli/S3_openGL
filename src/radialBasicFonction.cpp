@@ -50,7 +50,8 @@ const VectorXd find_omega(unsigned int nbPointsControle, std::vector<Cube> v_poi
 //création de notre fonction pour générer le terrain
 void gener_terrain(unsigned int nbPointsControle, Cube* actualCube, std::vector<Cube> v_pointsControle){
     VectorXd omega = find_omega(nbPointsControle, v_pointsControle);
-    for(int i=1; i<nbPointsControle; i++){
-        actualCube->poids = omega[i]*phi(norm((actualCube->position-v_pointsControle[i].position)));
+    for(int i=0; i<nbPointsControle; i++){
+
+        if (actualCube->poids == 0) actualCube->poids += omega[i]*phi(norm((actualCube->position-v_pointsControle[i].position)));
     }
 }

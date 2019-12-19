@@ -19,7 +19,7 @@ Shader::Shader(const std::string& filepathVertex, const std::string& filepathFra
 }
 
 Shader::~Shader() {
-	GLCall(glDeleteProgram(m_rendererID));
+	glDeleteProgram(m_rendererID);
 }
 
 std::string Shader::parseShader(const std::string& filepath) {

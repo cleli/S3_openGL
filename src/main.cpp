@@ -39,13 +39,20 @@ int main(int argc, char *argv[]) {
 
     stockCube[1492].poids=10;
     stockCube[1420].poids=6;
-    stockCube[2001].poids=-12;
-    stockCube[1979].poids=20;
+    stockCube[2001].poids=-4;
+    stockCube[1979].poids=-20;
 
-    std::vector<Cube> v_pointsControle = {stockCube[1000],stockCube[1420],stockCube[2001], stockCube[1979]};
-    
+    std::vector<Cube> v_pointsControle = {stockCube[1492],stockCube[1420],stockCube[2001], stockCube[1979]};
+
     bool mouse_pressed=false; //appui de la molette pour le déplacement de la trackball
     glm::vec4 current_color = glm::vec4(0.93f,0.5f, 0.93f, 0.8f);
+
+    for(int i=0;i<l*L*H;i++){
+            gener_terrain(nbPointsControle, &stockCube[i], v_pointsControle);  
+        
+            std::cout<< i << " poids des points : " << stockCube[i].poids << std::endl;         
+    }
+    
 
     while (app.isRunning()) {
 
@@ -145,11 +152,6 @@ int main(int argc, char *argv[]) {
                 stockCube[i].draw(camera);
             }
         }
-
-        /*for(int i=0;i<l*L*H;i++){
-            gener_terrain(nbPointsControle, &stockCube[i], v_pointsControle);       
-            std::cout<<"poids des points : " <<stockCube[i].poids<< std::endl;         
-        }*/
         
         // pour que le curseur reste toujours visible
         glDisable(GL_DEPTH_TEST);
