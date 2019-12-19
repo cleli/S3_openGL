@@ -17,6 +17,7 @@ public:
     glm::vec3 position;
     glm::vec4 color;
     bool isVisible;
+    double poids;
 
 private:
     unsigned int m_vao;

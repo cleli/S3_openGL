@@ -5,6 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
 #include <iostream>
+#include <ctime>
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_sdl.h>
@@ -14,11 +15,14 @@
 #include "app.h"
 #include "cube.h"
 #include "menu.hpp"
+#include "radialBasicFonction.hpp"
 
 int main(int argc, char *argv[]) {
 
     App app;
-   
+
+    unsigned int nbPointsControle = 4;
+    
     TrackballCamera camera; // création de la trackball caméra
     unsigned int l=15, L=20, H=10; // taille de notre monde
 
@@ -32,6 +36,13 @@ int main(int argc, char *argv[]) {
         stockCube[i].position = glm::vec3 (i%l,  floor(float(i/(l*L))), floor(float((i/l) % L)));
         if(i<l*L*3) stockCube[i].isVisible=true;
     }
+
+    stockCube[1492].poids=10;
+    stockCube[1420].poids=6;
+    stockCube[2001].poids=-12;
+    stockCube[1979].poids=20;
+
+    std::vector<Cube> v_pointsControle = {stockCube[1000],stockCube[1420],stockCube[2001], stockCube[1979]};
     
     bool mouse_pressed=false; //appui de la molette pour le déplacement de la trackball
     glm::vec4 current_color = glm::vec4(0.93f,0.5f, 0.93f, 0.8f);
@@ -75,20 +86,6 @@ int main(int argc, char *argv[]) {
                 else if (e.key.keysym.scancode == SDL_SCANCODE_S) { 
                     stockCube[curseur].isVisible=false;
                 }
-
-                /*// Raccourcis clavier pour changer la couleur
-                else if (e.key.keysym.scancode == SDL_SCANCODE_R){  //rouge
-                    current_color = glm::vec4(1.0f,0.0f, 0.0f, 0.8f);
-                    if(stockCube[curseur].isVisible==true) stockCube[curseur].color= current_color;
-                }
-                else if (e.key.keysym.scancode == SDL_SCANCODE_V){ //vert
-                    current_color = glm::vec4(0.0f,1.0f, 0.0f, 0.8f);
-                    if(stockCube[curseur].isVisible==true) stockCube[curseur].color= current_color;
-                }
-                else if (e.key.keysym.scancode == SDL_SCANCODE_B){ //bleu
-                    current_color = glm::vec4(0.0f,0.0f, 1.0f, 0.8f);
-                    if(stockCube[curseur].isVisible==true) stockCube[curseur].color= current_color;
-                }*/
                 
             }
             break;
@@ -148,6 +145,11 @@ int main(int argc, char *argv[]) {
                 stockCube[i].draw(camera);
             }
         }
+
+        /*for(int i=0;i<l*L*H;i++){
+            gener_terrain(nbPointsControle, &stockCube[i], v_pointsControle);       
+            std::cout<<"poids des points : " <<stockCube[i].poids<< std::endl;         
+        }*/
         
         // pour que le curseur reste toujours visible
         glDisable(GL_DEPTH_TEST);

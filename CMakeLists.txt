@@ -2,6 +2,8 @@
 cmake_minimum_required(VERSION 2.8)
 project(opengl-tutorials C CXX)
 
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/modules)
+
 # /////////////////////////////////////////////////////////////////////////////
 # ////////////////////////////// PROJECT FILES ////////////////////////////////
 # /////////////////////////////////////////////////////////////////////////////
@@ -25,6 +27,11 @@ else()
     find_package(SDL2 REQUIRED)
 endif()
 
+
+find_package(EIGEN3 REQUIRED)
+message(STATUS ${EIGEN3_INCLUDE_DIR})
+message(STATUS ${EIGEN3_LIBRARY})
+
 # ------------------------------ BUILD IF NEEDED ------------------------------
 
 add_library(GLAD STATIC "lib/glad/src/glad.c")
@@ -38,6 +45,7 @@ add_library(IMGUI STATIC ${IMGUI_SOURCES})
 include_directories(
     ${OPENGL_INCLUDE_DIR}
     ${SDL2_INCLUDE_DIRS}
+    ${EIGEN3_INCLUDE_DIR}
     lib/glad/include
     lib/imgui
     lib
