@@ -28,8 +28,7 @@ int main(int argc, char *argv[]) {
 
     unsigned int curseur=floor((l/2)+(3*l*L)+(l*L/2)); //Emplacement initial du curseur au milieu du haut du sol
 
-
-    camera.setPosMatrix(l/2,H/2,L/2);
+    camera.setPosMatrix(l/2,H/2,L/2); //deplacement de la position initiale pour que la camera tourne autour du centre des cubes
 
     Cube stockCube[l*L*H]; // tableau qui stocke tous les cubes du monde de taille(lxLxH)
     for(int i=0;i<l*L*H;i++){ // création de notre sol de cube (5*5*3)
@@ -37,6 +36,7 @@ int main(int argc, char *argv[]) {
         if(i<l*L*3) stockCube[i].isVisible=true;
     }
 
+    //radial basic function
     stockCube[1492].poids=10;
     stockCube[1420].poids=6;
     stockCube[2001].poids=-4;
@@ -48,11 +48,12 @@ int main(int argc, char *argv[]) {
     glm::vec4 current_color = glm::vec4(0.93f,0.5f, 0.93f, 0.8f);
 
     for(int i=0;i<l*L*H;i++){
-            gener_terrain(nbPointsControle, &stockCube[i], v_pointsControle);  
-        
-            std::cout<< i << " poids des points : " << stockCube[i].poids << std::endl;         
+        gener_terrain(nbPointsControle, &stockCube[i], v_pointsControle);  
+        // std::cout<< i << " poids des points : " << stockCube[i].poids << std::endl;         
     }
     
+    //création et initialisation de la lumiere directionnelle
+    glm::vec3 lumiereDirection = glm::vec3(-1.0f, -0.867f, 0.021f);
 
     while (app.isRunning()) {
 
@@ -138,18 +139,20 @@ int main(int argc, char *argv[]) {
             default: break;
             };
         }
-       
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         app.beginFrame();
 
-        afficheMenu(curseur, &current_color, stockCube, l, L, H);        
+        //affichage du menu
+        afficheMenu(curseur, &current_color, stockCube, l, L, H, &lumiereDirection);        
        // ImGui::ShowDemoWindow();
 
-         //affichage de notre monde initialisé avec un sol
+
+        //affichage de notre monde initialisé avec un sol
         for(int i=0;i<l*L*H;i++){
             if(stockCube[i].isVisible==true){
-                stockCube[i].draw(camera);
+                stockCube[i].draw(camera, glm::normalize(lumiereDirection));
             }
         }
         

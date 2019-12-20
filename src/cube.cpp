@@ -66,11 +66,21 @@ Cube::Cube()
      isVisible(0), color(0.93f,0.5f, 0.93f, 0.5f), poids(0)
 {
     // ------------------ Vertex Buffer
+    //positions
     unsigned int posVB;
     {
         GLCall(glGenBuffers(1, &posVB));
         GLCall(glBindBuffer(GL_ARRAY_BUFFER, posVB));
         GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(cubeData::positions), cubeData::positions, GL_STATIC_DRAW));
+        GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+    }
+
+    //normales
+    unsigned int normVB;
+    {
+        GLCall(glGenBuffers(1, &normVB));
+        GLCall(glBindBuffer(GL_ARRAY_BUFFER, normVB));
+        GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(cubeData::normals), cubeData::normals, GL_STATIC_DRAW));
         GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
     }
 
@@ -81,10 +91,18 @@ Cube::Cube()
         GLCall(glBindVertexArray(m_vao));
 
         // Vertex input description
+        //positions
         {
             GLCall(glEnableVertexAttribArray(0));
             GLCall(glBindBuffer(GL_ARRAY_BUFFER, posVB));
             GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL));
+        }
+
+        //normales
+        {
+            GLCall(glEnableVertexAttribArray(1));
+            GLCall(glBindBuffer(GL_ARRAY_BUFFER, normVB));
+            GLCall(glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL));
         }
         
         GLCall(glBindVertexArray(0));
@@ -99,7 +117,7 @@ Cube::Cube()
     }
 
     // ------------------ Default values for uniforms
-    m_shader.bind();
+    /*m_shader.bind();
     {
         glm::mat4 modelMat = glm::mat4(1.0f);
         m_shader.setUniformMat4f("uModel", modelMat);
@@ -111,7 +129,7 @@ Cube::Cube()
         m_shader.setUniformMat4f("uViewProj", viewProjMat);
 
     }
-    m_shader.unbind();
+    m_shader.unbind();*/
 }
 
 Cube::~Cube()
@@ -119,7 +137,7 @@ Cube::~Cube()
 }
 
 
-void Cube::draw(const TrackballCamera &cam) {
+void Cube::draw(const TrackballCamera &cam, const glm::vec3 &lumiereDirection) {
 
     // Bind
     GLCall(glBindVertexArray(m_vao));
@@ -137,10 +155,14 @@ void Cube::draw(const TrackballCamera &cam) {
     //changer de couleur à chaque cube
     m_shader.setUniform4f("uColor", color);
 
+    //lumiere directionnelle
+    m_shader.setUniform3f("uLumiereDirection", lumiereDirection.x, lumiereDirection.y, lumiereDirection.z);
+
     // Draw call
     GLCall(glDrawElements(GL_TRIANGLES, sizeof(cubeData::indices), GL_UNSIGNED_SHORT, (void*) 0));
 }
 
+//afficher le curseur
 void Cube::drawCurseur(const TrackballCamera &cam) {
 
     // Bind
@@ -156,7 +178,7 @@ void Cube::drawCurseur(const TrackballCamera &cam) {
     //pour la camera
     m_shader.setUniformMat4f("uViewProj", cam.getProjMatrix() * cam.getViewMatrix());
     
-    //changer de couleur à chaque cube
+    //couleur
     m_shader.setUniform4f("uColor", glm::vec4(1.0f,0.0f,0.0f,1.0f));
 
     // Draw call
