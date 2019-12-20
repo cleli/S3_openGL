@@ -40,7 +40,7 @@ void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[
     }
 
     ImGui::Text("%s", current_color_string.c_str());
-
+/*
     if (rouge==true){
         *current_color = glm::vec4(1.0f, 0.0f, 0.0f, 0.8f);
         if(stockCube[curseur].isVisible==true) stockCube[curseur].color= *current_color;
@@ -82,7 +82,14 @@ void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[
         if(stockCube[curseur].isVisible==true) stockCube[curseur].color= *current_color;
         current_color_string="Violet";
         violet=false;
+    }*/
+
+    //couleur
+    ImGui::ColorEdit4("Couleur", (float*)current_color);
+    if(ImGui::Button("modifier couleur")){
+        if(stockCube[curseur].isVisible==true) stockCube[curseur].color= *current_color;
     }
+
     ImGui::Spacing();
     ImGui::Spacing();
 

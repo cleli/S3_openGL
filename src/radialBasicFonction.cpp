@@ -22,20 +22,20 @@ const double norm(const glm::vec3 vec1){
 } 
 
 //Déterminer les omega i
-const VectorXd find_omega(unsigned int nbPointsControle, std::vector<Cube> v_pointsControle){
+const VectorXd find_omega(unsigned int nbPointsControle, std::vector<Cube*> v_pointsControle){
     MatrixXd M_contrainte = MatrixXd::Zero(nbPointsControle, nbPointsControle);
     //VectorXd omega = VectorXd::Ones(nbPointsControle);
     VectorXd poids = VectorXd::Ones(nbPointsControle);
 
     //remplissage du vecteur de poids des points de controle
     for(int h=0; h<nbPointsControle; h++){
-        poids[h]=v_pointsControle[h].poids;
+        poids[h]=v_pointsControle[h]->poids;
     }
 
     //remplissage de notre matrice 
     for(int i=0; i<nbPointsControle; i++){
         for(int j=0; j<nbPointsControle; j++){
-            M_contrainte(i,j) = phi(norm(v_pointsControle[i].position-v_pointsControle[j].position));
+            M_contrainte(i,j) = phi(norm(v_pointsControle[i]->position-v_pointsControle[j]->position));
         }
     }
     
@@ -48,10 +48,10 @@ const VectorXd find_omega(unsigned int nbPointsControle, std::vector<Cube> v_poi
 }
 
 //création de notre fonction pour générer le terrain
-void gener_terrain(unsigned int nbPointsControle, Cube* actualCube, const std::vector<Cube> v_pointsControle){
+void gener_terrain(unsigned int nbPointsControle, Cube* actualCube, const std::vector<Cube*> v_pointsControle){
     VectorXd omega = find_omega(nbPointsControle, v_pointsControle);
     for(int i=0; i<nbPointsControle; i++){
 
-        if (actualCube->poids == 0) actualCube->poids += omega[i]*phi(norm((actualCube->position-v_pointsControle[i].position)));
+        if (actualCube->poids == 0) actualCube->poids += omega[i]*phi(norm((actualCube->position-v_pointsControle[i]->position)));
     }
 }

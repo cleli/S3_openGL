@@ -21,6 +21,9 @@ int main(int argc, char *argv[]) {
 
     App app;
 
+    //ciel du monde
+    glClearColor(0.45,0.8,0.94, 1.0);
+
     unsigned int nbPointsControle = 4;
     
     TrackballCamera camera; // création de la trackball caméra
@@ -42,18 +45,18 @@ int main(int argc, char *argv[]) {
     stockCube[2001].poids=-4;
     stockCube[1979].poids=-20;
 
-    //std::vector<Cube*> v_pointsControle = {&stockCube[1492],&stockCube[1420],&stockCube[2001], &stockCube[1979]};
+    std::vector<Cube*> v_pointsControle = {&stockCube[1492],&stockCube[1420],&stockCube[2001], &stockCube[1979]};
 
     bool mouse_pressed=false; //appui de la molette pour le déplacement de la trackball
     glm::vec4 current_color = glm::vec4(0.93f,0.5f, 0.93f, 0.8f);
 
-    // for(int i=0;i<l*L*H;i++){
-    //     gener_terrain(nbPointsControle, &stockCube[i], v_pointsControle);  
-    //    /* if(stockCube[i].poids > 0){
-    //         stockCube[i].isVisible=true;
-    //     }*/
-    //     // std::cout<< i << " poids des points : " << stockCube[i].poids << std::endl;         
-    // }
+     for(int i=0;i<l*L*H;i++){
+         gener_terrain(nbPointsControle, &stockCube[i], v_pointsControle);  
+        if(stockCube[i].poids > 0){
+             stockCube[i].isVisible=true;
+        }
+        // std::cout<< i << " poids des points : " << stockCube[i].poids << std::endl;         
+     }
     
     //création et initialisation de la lumiere directionnelle
     glm::vec3 lumiereDirection = glm::vec3(-1.0f, -0.867f, 0.021f);
@@ -153,8 +156,6 @@ int main(int argc, char *argv[]) {
         //affichage du menu
         afficheMenu(curseur, &current_color, stockCube, l, L, H, &lumiereDirection, &pointLumiere);        
         
-
-
         //affichage de notre monde initialisé avec un sol
         for(int i=0;i<l*L*H;i++){
             if(stockCube[i].isVisible==true){
