@@ -48,7 +48,7 @@ const VectorXd find_omega(unsigned int nbPointsControle, std::vector<Cube> v_poi
 }
 
 //création de notre fonction pour générer le terrain
-void gener_terrain(unsigned int nbPointsControle, Cube* actualCube, std::vector<Cube> v_pointsControle){
+void gener_terrain(unsigned int nbPointsControle, Cube* actualCube, const std::vector<Cube> v_pointsControle){
     VectorXd omega = find_omega(nbPointsControle, v_pointsControle);
     for(int i=0; i<nbPointsControle; i++){
 

@@ -42,15 +42,18 @@ int main(int argc, char *argv[]) {
     stockCube[2001].poids=-4;
     stockCube[1979].poids=-20;
 
-    std::vector<Cube> v_pointsControle = {stockCube[1492],stockCube[1420],stockCube[2001], stockCube[1979]};
+    //std::vector<Cube*> v_pointsControle = {&stockCube[1492],&stockCube[1420],&stockCube[2001], &stockCube[1979]};
 
     bool mouse_pressed=false; //appui de la molette pour le déplacement de la trackball
     glm::vec4 current_color = glm::vec4(0.93f,0.5f, 0.93f, 0.8f);
 
-    for(int i=0;i<l*L*H;i++){
-        gener_terrain(nbPointsControle, &stockCube[i], v_pointsControle);  
-        // std::cout<< i << " poids des points : " << stockCube[i].poids << std::endl;         
-    }
+    // for(int i=0;i<l*L*H;i++){
+    //     gener_terrain(nbPointsControle, &stockCube[i], v_pointsControle);  
+    //    /* if(stockCube[i].poids > 0){
+    //         stockCube[i].isVisible=true;
+    //     }*/
+    //     // std::cout<< i << " poids des points : " << stockCube[i].poids << std::endl;         
+    // }
     
     //création et initialisation de la lumiere directionnelle
     glm::vec3 lumiereDirection = glm::vec3(-1.0f, -0.867f, 0.021f);

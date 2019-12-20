@@ -122,16 +122,20 @@ void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[
     }
 
     ImGui::Spacing();
-    ImGui::Text("Lumière : ");
+    ImGui::Text("Lumière directionnelle: ");
     ImGui::Spacing();
     //pour changer la lumiere directionnelle
+    ImGui::PushID(0);
     ImGui::SliderFloat3("", (float*)lumiereDirectionPtr, -1, 1);
+    ImGui::PopID();
 
     ImGui::Spacing();
-    ImGui::Text("Lumière : ");
+    ImGui::Text("Point de lumière: ");
     ImGui::Spacing();
-    //pour changer la lumiere directionnelle
-    ImGui::SliderFloat3("", (float*)PointlumierePtr, -1, 1);
+    //pour changer le point de lumieres
+    ImGui::PushID(1);
+    ImGui::SliderFloat3("", (float*)PointlumierePtr, -10, 10);
+    ImGui::PopID();
 
     ImGui::Spacing();
     ImGui::Spacing();
