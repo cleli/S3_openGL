@@ -137,7 +137,7 @@ Cube::~Cube()
 }
 
 
-void Cube::draw(const TrackballCamera &cam, const glm::vec3 &lumiereDirection) {
+void Cube::draw(const TrackballCamera &cam, const glm::vec3 &lumiereDirection, const glm::vec3 &pointLumiere) {
 
     // Bind
     GLCall(glBindVertexArray(m_vao));
@@ -157,6 +157,9 @@ void Cube::draw(const TrackballCamera &cam, const glm::vec3 &lumiereDirection) {
 
     //lumiere directionnelle
     m_shader.setUniform3f("uLumiereDirection", lumiereDirection.x, lumiereDirection.y, lumiereDirection.z);
+
+    //point de lumière
+    m_shader.setUniform3f("uPointLumiere", pointLumiere.x, pointLumiere.y, pointLumiere.z);
 
     // Draw call
     GLCall(glDrawElements(GL_TRIANGLES, sizeof(cubeData::indices), GL_UNSIGNED_SHORT, (void*) 0));

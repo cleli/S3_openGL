@@ -55,6 +55,9 @@ int main(int argc, char *argv[]) {
     //création et initialisation de la lumiere directionnelle
     glm::vec3 lumiereDirection = glm::vec3(-1.0f, -0.867f, 0.021f);
 
+    //création et initialisation de la lumiere directionnelle
+    glm::vec3 pointLumiere = glm::vec3(0.0f, 0.867f, -1.0f);
+
     while (app.isRunning()) {
 
         SDL_Event e;
@@ -145,14 +148,14 @@ int main(int argc, char *argv[]) {
         app.beginFrame();
 
         //affichage du menu
-        afficheMenu(curseur, &current_color, stockCube, l, L, H, &lumiereDirection);        
-       // ImGui::ShowDemoWindow();
+        afficheMenu(curseur, &current_color, stockCube, l, L, H, &lumiereDirection, &pointLumiere);        
+        
 
 
         //affichage de notre monde initialisé avec un sol
         for(int i=0;i<l*L*H;i++){
             if(stockCube[i].isVisible==true){
-                stockCube[i].draw(camera, glm::normalize(lumiereDirection));
+                stockCube[i].draw(camera, glm::normalize(lumiereDirection), glm::normalize(pointLumiere));
             }
         }
         

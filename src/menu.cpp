@@ -22,7 +22,7 @@ static bool bleu=false;
 static bool indigo=false;
 static bool violet=false;
 
-void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[],unsigned int l,unsigned int L, unsigned int H, glm::vec3* lumiereDirectionPtr) {
+void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[],unsigned int l,unsigned int L, unsigned int H, glm::vec3* lumiereDirectionPtr, glm::vec3* PointlumierePtr) {
     //création du menu
     ImGui::Begin("Menu");
 
@@ -128,6 +128,12 @@ void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[
     ImGui::SliderFloat3("", (float*)lumiereDirectionPtr, -1, 1);
 
     ImGui::Spacing();
+    ImGui::Text("Lumière : ");
+    ImGui::Spacing();
+    //pour changer la lumiere directionnelle
+    ImGui::SliderFloat3("", (float*)PointlumierePtr, -1, 1);
+
+    ImGui::Spacing();
     ImGui::Spacing();
     ImGui::Spacing();
 
@@ -139,4 +145,5 @@ void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[
     }
 
     ImGui::End();
+    //ImGui::ShowDemoWindow();
 }

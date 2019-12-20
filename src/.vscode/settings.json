@@ -46,6 +46,7 @@
         "functional": "cpp",
         "iterator": "cpp",
         "iomanip": "cpp",
-        "core": "cpp"
+        "core": "cpp",
+        "*.frag": "cpp"
     }
 }
