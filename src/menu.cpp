@@ -27,7 +27,7 @@ void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[
     ImGui::Begin("Menu");
 
     //Menu couleurs
-    if (ImGui::BeginMenu("Couleur : "))
+   /* if (ImGui::BeginMenu("Couleur : "))
     {
         ImGui::MenuItem("Rouge", NULL, &rouge);
         ImGui::MenuItem("Orange", NULL, &orange);
@@ -40,7 +40,7 @@ void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[
     }
 
     ImGui::Text("%s", current_color_string.c_str());
-/*
+
     if (rouge==true){
         *current_color = glm::vec4(1.0f, 0.0f, 0.0f, 0.8f);
         if(stockCube[curseur].isVisible==true) stockCube[curseur].color= *current_color;
@@ -128,6 +128,15 @@ void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[
         }
     }
 
+   /* if(ImGui::Button("Ambiance nuit")){ 
+        lumiereDirectionPtr = glm::vec3(0.0f, 0.0f, 0.0f);
+        pointLumierePtr = glm::vec3(1.0f, -0.2f, 1.0f);
+    }
+    if(ImGui::Button("Ambiance jour")){ 
+        lumiereDirectionPtr = glm::vec3(0.0f, -0.3f, -0.5f);
+        PointlumierePtr = glm::vec3(0.0f, 0.867f, -1.0f);
+
+    }*/
     ImGui::Spacing();
     ImGui::Text("Lumière directionnelle: ");
     ImGui::Spacing();

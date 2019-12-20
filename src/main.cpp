@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
     App app;
 
     //ciel du monde
-    glClearColor(0.45,0.8,0.94, 1.0);
+    //glClearColor(0.45,0.8,0.94, 1.0);
 
     unsigned int nbPointsControle = 4;
     
@@ -36,14 +36,19 @@ int main(int argc, char *argv[]) {
     Cube stockCube[l*L*H]; // tableau qui stocke tous les cubes du monde de taille(lxLxH)
     for(int i=0;i<l*L*H;i++){ // création de notre sol de cube (5*5*3)
         stockCube[i].position = glm::vec3 (i%l,  floor(float(i/(l*L))), floor(float((i/l) % L)));
-        if(i<l*L*3) stockCube[i].isVisible=true;
+       // if(i<l*L*3) stockCube[i].isVisible=true;
+       stockCube[2].isVisible=true;
+        stockCube[1492].isVisible=true;
+        stockCube[1420].isVisible=true;
+        stockCube[2001].isVisible=true;
+        stockCube[1979].isVisible=true;
     }
 
     //radial basic function
-    stockCube[1492].poids=10;
-    stockCube[1420].poids=6;
-    stockCube[2001].poids=-4;
-    stockCube[1979].poids=-20;
+    stockCube[1492].poids=2;
+    stockCube[1420].poids=0.5;
+    stockCube[2001].poids=-1;
+    stockCube[1979].poids=-0.4;
 
     std::vector<Cube*> v_pointsControle = {&stockCube[1492],&stockCube[1420],&stockCube[2001], &stockCube[1979]};
 
@@ -52,7 +57,7 @@ int main(int argc, char *argv[]) {
 
      for(int i=0;i<l*L*H;i++){
          gener_terrain(nbPointsControle, &stockCube[i], v_pointsControle);  
-        if(stockCube[i].poids > 0){
+        if(stockCube[i].poids >0.5){
              stockCube[i].isVisible=true;
         }
         // std::cout<< i << " poids des points : " << stockCube[i].poids << std::endl;         
@@ -154,7 +159,7 @@ int main(int argc, char *argv[]) {
         app.beginFrame();
 
         //affichage du menu
-        afficheMenu(curseur, &current_color, stockCube, l, L, H, &lumiereDirection, &pointLumiere);        
+        afficheMenu(curseur, &current_color, stockCube, l, L, H, &lumiereDirection, &pointLumiere);
         
         //affichage de notre monde initialisé avec un sol
         for(int i=0;i<l*L*H;i++){
