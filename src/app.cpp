@@ -9,8 +9,8 @@
 #include <imgui/imgui_impl_opengl3.h>
 
 bool App::m_instanciated = false;
-int WINDOW_WIDTH=650;
-int WINDOW_HEIGTH=650;
+int WINDOW_WIDTH=800;
+int WINDOW_HEIGTH=800;
 
 App::App() : m_running(true){
     assert(!m_instanciated && "App already created !");
