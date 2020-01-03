@@ -11,6 +11,7 @@
 
 #include "menu.hpp"
 #include "cube.h"
+#include "radialBasicFonction.hpp"
 
 std::string current_color_string="Violet";
 
@@ -25,64 +26,6 @@ static bool violet=false;
 void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[],unsigned int l,unsigned int L, unsigned int H, glm::vec3* lumiereDirectionPtr, glm::vec3* PointlumierePtr) {
     //création du menu
     ImGui::Begin("Menu");
-
-    //Menu couleurs
-   /* if (ImGui::BeginMenu("Couleur : "))
-    {
-        ImGui::MenuItem("Rouge", NULL, &rouge);
-        ImGui::MenuItem("Orange", NULL, &orange);
-        ImGui::MenuItem("Jaune", NULL, &jaune);
-        ImGui::MenuItem("Vert", NULL, &vert);
-        ImGui::MenuItem("Bleu", NULL, &bleu);
-        ImGui::MenuItem("Indigo", NULL, &indigo);
-        ImGui::MenuItem("Violet", NULL, &violet);
-        ImGui::EndMenu();
-    }
-
-    ImGui::Text("%s", current_color_string.c_str());
-
-    if (rouge==true){
-        *current_color = glm::vec4(1.0f, 0.0f, 0.0f, 0.8f);
-        if(stockCube[curseur].isVisible==true) stockCube[curseur].color= *current_color;
-        current_color_string="Rouge";
-        rouge=false;
-    }
-    if (orange==true){
-        *current_color = glm::vec4(1.0f, 0.6f, 0.0f, 0.8f);
-        if(stockCube[curseur].isVisible==true) stockCube[curseur].color= *current_color;
-        current_color_string="Orange";
-        orange=false;
-    }
-    if (jaune==true){
-        *current_color = glm::vec4(1.0f,0.89f, 0.2f, 0.8f);
-        if(stockCube[curseur].isVisible==true) stockCube[curseur].color= *current_color;
-        current_color_string="Jaune";
-        jaune=false;
-    }
-    if (vert==true){
-        *current_color = glm::vec4(0.0f,1.0f, 0.0f, 0.8f);
-        if(stockCube[curseur].isVisible==true) stockCube[curseur].color= *current_color;
-        current_color_string="Vert";
-        vert=false;
-    }
-    if (indigo==true){
-        *current_color = glm::vec4(0.47f,0.1f, 0.97f, 0.8f);
-        if(stockCube[curseur].isVisible==true) stockCube[curseur].color= *current_color;
-        current_color_string="Indigo";
-        indigo=false;
-    }
-    if (bleu==true){
-        *current_color = glm::vec4(0.0f,0.0f, 1.0f, 0.8f);
-        if(stockCube[curseur].isVisible==true) stockCube[curseur].color= *current_color;
-        current_color_string="Bleu";
-        bleu=false;
-    }
-    if (violet==true){
-        *current_color = glm::vec4(0.93f,0.5f, 0.93f, 0.8f);
-        if(stockCube[curseur].isVisible==true) stockCube[curseur].color= *current_color;
-        current_color_string="Violet";
-        violet=false;
-    }*/
 
     //couleur
     ImGui::ColorEdit4("Couleur", (float*)current_color);
@@ -126,6 +69,11 @@ void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[
             stockCube[current_cube-l*L].isVisible=false;
             stockCube[current_cube-l*L].color= *current_color;
         }
+    }
+
+    ImGui::Text("Génération terrain: ");
+    if(ImGui::Button("Terrain Aléatoire")){
+       gener_terrainAleatoire(l, L,  H, stockCube);
     }
 
    /* if(ImGui::Button("Ambiance nuit")){ 

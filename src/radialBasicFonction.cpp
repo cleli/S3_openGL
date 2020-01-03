@@ -4,7 +4,9 @@
 #include <glad/glad.h>
 #include <spdlog/spdlog.h>
 #include <glm/glm.hpp>
-
+#include <random>
+#include <functional>
+#include <chrono>
 
 #include "radialBasicFonction.hpp"
 #include "cube.h"
@@ -53,5 +55,38 @@ void gener_terrain(unsigned int nbPointsControle, Cube* actualCube, const std::v
     for(int i=0; i<nbPointsControle; i++){
 
         if (actualCube->poids == 0) actualCube->poids += omega[i]*phi(norm((actualCube->position-v_pointsControle[i]->position)));
+    }
+}
+
+void gener_terrainAleatoire(unsigned int l,unsigned int L, unsigned int H, Cube stockCube[]){
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
+    std::uniform_real_distribution<float> uniformRealDistribution(-2,2);
+
+    unsigned int nbPointsControle = 5;
+
+    for(int i=0;i<l*L*H;i++){ 
+        stockCube[i].isVisible=false;
+    }
+    
+    std::uniform_int_distribution<int> uniformIntDistribution(0,l*L*H-1);
+
+    std::vector<Cube*> v_pointsControle;
+
+    for(int i=0;i<nbPointsControle;i++){
+        int currentPtControle = uniformIntDistribution(generator);
+        float currentPoids = uniformRealDistribution(generator);
+
+        stockCube[currentPtControle].isVisible = true;
+        stockCube[currentPtControle].poids = currentPoids;
+        v_pointsControle.push_back(&stockCube[currentPtControle]);
+    }
+    
+    
+    for(int i=0;i<l*L*H;i++){
+        gener_terrain(nbPointsControle, &stockCube[i], v_pointsControle);  
+        if(stockCube[i].poids >0.5){
+            stockCube[i].isVisible=true;
+        }        
     }
 }
