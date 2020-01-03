@@ -6,8 +6,8 @@
 #include <iostream>
 #include <fstream>
 
-#include "cube.h"
-#include "save_open.hpp"
+#include "../include/cube.h"
+#include "../include/save_open.hpp"
 
 using namespace std;
 

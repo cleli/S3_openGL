@@ -2,8 +2,8 @@
 
 #include <glm/glm.hpp>
 
-#include "shader.h"
-#include "TrackballCamera.hpp"
+#include "../include/shader.h"
+#include "../include/TrackballCamera.hpp"
 
 class Cube {
 public:

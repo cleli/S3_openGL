@@ -1,4 +1,4 @@
-#include "shader.h"
+#include "../include/shader.h"
 
 #include <fstream>
 #include <string>
@@ -8,7 +8,7 @@
 #include <glad/glad.h>
 #include <debug_break/debug_break.h>
 
-#include "gl-exception.h"
+#include "../include/gl-exception.h"
 
 Shader::Shader(const std::string& filepathVertex, const std::string& filepathFragment)
 	: m_filePathVertex(filepathVertex), m_filePathFragment(filepathFragment), m_rendererID(0)

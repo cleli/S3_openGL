@@ -1,4 +1,4 @@
-#include "app.h"
+#include "../include/app.h"
 
 #include <glad/glad.h>
 #include <spdlog/spdlog.h>

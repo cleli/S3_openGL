@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 #include <glm/glm.hpp>
 
-#include "cube.h"
+#include "../include/cube.h"
 
 using namespace Eigen;
 

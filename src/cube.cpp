@@ -1,9 +1,9 @@
-#include "cube.h"
+#include "../include/cube.h"
 #include <iostream>
 
 #include <glm/gtc/matrix_transform.hpp>
-#include "gl-exception.h"
-#include "TrackballCamera.hpp"
+#include "../include/gl-exception.h"
+#include "../include/TrackballCamera.hpp"
 
 namespace cubeData {
     //    v6----- v5
@@ -116,20 +116,6 @@ Cube::Cube()
         GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
     }
 
-    // ------------------ Default values for uniforms
-    /*m_shader.bind();
-    {
-        glm::mat4 modelMat = glm::mat4(1.0f);
-        m_shader.setUniformMat4f("uModel", modelMat);
-    }
-    {
-        glm::mat4 viewMat = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -10.0f));
-        glm::mat4 projMat = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 100.0f);
-        glm::mat4 viewProjMat = projMat * viewMat;
-        m_shader.setUniformMat4f("uViewProj", viewProjMat);
-
-    }
-    m_shader.unbind();*/
 }
 
 Cube::~Cube()

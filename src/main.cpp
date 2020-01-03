@@ -11,12 +11,12 @@
 #include <imgui/imgui_impl_sdl.h>
 #include <imgui/imgui_impl_opengl3.h>
 
-#include "TrackballCamera.hpp"
-#include "app.h"
-#include "cube.h"
-#include "menu.hpp"
-#include "radialBasicFonction.hpp"
-#include "save_open.hpp"
+#include "../include/TrackballCamera.hpp"
+#include "../include/app.h"
+#include "../include/cube.h"
+#include "../include/menu.hpp"
+#include "../include/radialBasicFonction.hpp"
+#include "../include/save_open.hpp"
 
 int main(int argc, char *argv[]) {
 
@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     //glClearColor(0.45,0.8,0.94, 1.0);
     
     TrackballCamera camera; // création de la trackball caméra
-    unsigned int l=15, L=20, H=10; // taille de notre monde
+    unsigned int l=20, L=20, H=20; // taille de notre monde
 
     unsigned int curseur=floor((l/2)+(3*l*L)+(l*L/2)); //Emplacement initial du curseur au milieu du haut du sol
 

@@ -9,10 +9,10 @@
 #include <imgui/imgui_impl_sdl.h>
 #include <imgui/imgui_impl_opengl3.h>
 
-#include "menu.hpp"
-#include "cube.h"
-#include "save_open.hpp"
-#include "radialBasicFonction.hpp"
+#include "../include/menu.hpp"
+#include "../include/cube.h"
+#include "../include/save_open.hpp"
+#include "../include/radialBasicFonction.hpp"
 
 
 void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[],unsigned int l,unsigned int L, unsigned int H, glm::vec3* lumiereDirectionPtr, glm::vec3* PointlumierePtr) {
@@ -57,9 +57,8 @@ void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[
         while(stockCube[current_cube].isVisible==true) {
             current_cube=current_cube+l*L;
         }
-        if(floor(float(current_cube/(l*L)))>0){
+        if(floor(float(current_cube/(l*L)))>0 && (current_cube!=curseur)){
             stockCube[current_cube-l*L].isVisible=false;
-            stockCube[current_cube-l*L].color= *current_color;
         }
     }
 
@@ -108,7 +107,7 @@ void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[
         int file = sauvegarder(stockCube, taille, filepath, filename);
     }
     ImGui::SameLine();
-     if(ImGui::Button("Charger")){
+    if(ImGui::Button("Charger")){
         unsigned int taille = l*L*H;
         std::string filename, filepath;
         std::cout <<"Entrez un emplacement (ex: ./doc/) : "<<std::endl;
@@ -117,6 +116,9 @@ void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[
         std::cin>> filename;
         charger(stockCube, taille, filepath, filename);
     }
+
+    ImGui::Spacing();
+    ImGui::Spacing();
 
     ImGui::End();
     //ImGui::ShowDemoWindow();

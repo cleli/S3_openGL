@@ -8,8 +8,8 @@
 #include <functional>
 #include <chrono>
 
-#include "radialBasicFonction.hpp"
-#include "cube.h"
+#include "../include/radialBasicFonction.hpp"
+#include "../include/cube.h"
 
 using namespace Eigen;
 
