@@ -13,6 +13,8 @@
 #include "../include/cube.h"
 #include "../include/save_open.hpp"
 #include "../include/radialBasicFonction.hpp"
+#include "../include/discretisation.hpp"
+
 
 
 void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[],unsigned int l,unsigned int L, unsigned int H, glm::vec3* lumiereDirectionPtr, glm::vec3* PointlumierePtr) {
@@ -93,9 +95,18 @@ void afficheMenu(unsigned int curseur, glm::vec4* current_color, Cube stockCube[
             stockCube[i].isVisible=false;
         }
     }
-    
     ImGui::Spacing();
     ImGui::Spacing();
+    ImGui::Spacing();
+
+    /*if(ImGui::Button("Discrétiser")){ 
+        discretiser(stockCube,l,L,H);
+        std::cout<<stockCube[0].color.y<<std::endl;
+    }
+
+    ImGui::Spacing();
+    ImGui::Spacing();
+    ImGui::Spacing();*/
 
     if(ImGui::Button("Sauvegarder")){
         unsigned int taille = l*L*H;
