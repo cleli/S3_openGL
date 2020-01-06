@@ -8,15 +8,10 @@
 #include <functional>
 #include <chrono>
 
-#include "../include/radialBasicFonction.hpp"
+#include "../include/radialBasisFunction.hpp"
 #include "../include/cube.h"
 
 using namespace Eigen;
-
-//notre fonction Phi
-const double phi(const double &d){
-    return exp(-0.2*d*d);
-}
 
 //calcul de la norme
 const double norm(const glm::vec3 vec1){

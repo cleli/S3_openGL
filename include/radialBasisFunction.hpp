@@ -8,7 +8,12 @@
 
 using namespace Eigen;
 
-const double phi(const double &d);
+//notre fonction Phi
+template <typename T>
+const T phi(const T &d){
+    return exp(-0.2*d*d);
+}
+
 const double norm(const glm::vec3 vec1);
 const VectorXd find_omega(unsigned int nbPointsControle, std::vector<Cube*> v_pointsControle);
 void gener_terrain(unsigned int nbPointsControle, Cube* actualCube, const std::vector<Cube*> v_pointsControle);

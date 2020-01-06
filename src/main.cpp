@@ -15,7 +15,7 @@
 #include "../include/app.h"
 #include "../include/cube.h"
 #include "../include/menu.hpp"
-#include "../include/radialBasicFonction.hpp"
+#include "../include/radialBasisFunction.hpp"
 #include "../include/save_open.hpp"
 
 int main(int argc, char *argv[]) {
