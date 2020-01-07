@@ -1,6 +1,6 @@
 # Set standards
 cmake_minimum_required(VERSION 2.8)
-project(opengl-tutorials C CXX)
+project(World_Imaker C CXX)
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/modules)
 

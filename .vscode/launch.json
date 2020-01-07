@@ -8,7 +8,7 @@
         "name": "(Linux) Launch",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/build/bin/Debug/opengl-tutorials",
+        "program": "${workspaceFolder}/build/bin/Debug/World_Imaker",
         "args": [],
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}",

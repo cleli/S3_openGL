@@ -79,7 +79,7 @@ void App::initSDL() {
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);	
 	
 	m_window = SDL_CreateWindow(
-		"OpenGL Tutorials !",
+		"World IMaker !",
 		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		WINDOW_WIDTH, WINDOW_HEIGTH,
 		SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI
